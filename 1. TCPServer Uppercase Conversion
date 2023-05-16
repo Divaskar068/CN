@@ -1,0 +1,30 @@
+import java.io.*;
+import java.net.*;
+
+public class TCPServer
+{
+    public static void main(String[] args) throws Exception
+    {
+       
+       // create server packet object which will read over transport layer
+       // create a connection with server via port 6060
+       ServerSocket server = new ServerSocket(6060); // welcome socket created
+       Socket forClient = server.accept(); // connection socket created after request from client
+       InputStream inpObj = forClient.getInputStream(); // inpstream for connection socket obj
+       InputStreamReader readerObj = new InputStreamReader(inpObj); // converts ascii to characterś
+       BufferedReader Buffer =new BufferedReader(readerObj); // to read?
+       OutputStream outobj=forClient.getOutputStream();
+       PrintWriter outToClient=new PrintWriter(outobj);
+      
+       while(true)
+       {
+       
+       String FromClient=Buffer.readLine();
+       System.out.println("From client: "+ FromClient);
+       String ReplyToClient=FromClient.toUpperCase();
+       outToClient.println(ReplyToClient);
+       outToClient.flush();
+       }
+    }
+   
+}
