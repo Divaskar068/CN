@@ -1,0 +1,42 @@
+//HTTPS client to download a web page from HTTPS server  
+
+
+/**
+ * Write a description of class HTTPProtocol here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+import java.net.*;
+import java.io.*;
+  import javax.net.ssl.*;
+public class HTTPProtocol
+{
+    public static void main(String[] args) throws Exception
+    {
+        // create socket of SSLSocket to connect to server(google or anyother
+        //secured server
+        //which is listening via SSLServerSocket at port 443
+        SSLSocketFactory sslFctoryobj= (SSLSocketFactory)SSLSocketFactory.getDefault();
+        String host="www.javatpoint.com";
+        int port=443;
+        SSLSocket ServerConnect=(SSLSocket)sslFctoryobj.createSocket( host, port);
+        //open input stream to SSLSocket
+        InputStream inputobj=    ServerConnect.getInputStream();
+        InputStreamReader Readerobj= new InputStreamReader(inputobj);
+        BufferedReader Buffer=new BufferedReader(Readerobj);
+        OutputStream outobj=ServerConnect.getOutputStream();
+         PrintWriter outToClient=new PrintWriter(outobj);
+         //https://www.javatpoint.com/aptitude/quantitative
+        outToClient.println("GET /aptitude/quantitative HTTP/1.1");
+        outToClient.println("Host: www.javatpoint.com");
+        outToClient.println("");
+        outToClient.flush();
+        String FromServer;
+        while ((FromServer=Buffer.readLine()) !=null)
+        {
+            System.out.println(FromServer);
+        }
+    }
+   
+}
