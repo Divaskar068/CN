@@ -1,5 +1,3 @@
-//Multithreaded TCP server 
-
 import java.net.*;
 import java.io.*;
 public class MultiThread implements Runnable
@@ -13,11 +11,10 @@ public class MultiThread implements Runnable
     
     public static void main(String[] args) throws Exception
     {
-        ServerSocket server=new ServerSocket(6969);// welcome socket created
-        while(true)//Indefinitely wait until every client
-        //is connected
+        ServerSocket server=new ServerSocket(6969);
+        while(true)
         {
-        Socket ForEveryClient=server.accept();//ForClient is connection socket
+        Socket ForEveryClient=server.accept();
         MultiThread obj1= new MultiThread(ForEveryClient);
         Thread Threadobj=new Thread(obj1);
         Threadobj.start();
@@ -27,27 +24,25 @@ public class MultiThread implements Runnable
     public void run() {
         try
         {
-        System.out.println("I am new Thread and  will serve new Telnet client");
-        // Here we should have code for serving 
-        //the Telnet client via connectionsocket
-        InputStream inputobj=   ConnectionSocket.getInputStream();
+        System.out.println("New Thread from pushpa and will serve new Telnet client");
+        
+        InputStream inputobj= ConnectionSocket.getInputStream();
         InputStreamReader Readerobj= new InputStreamReader(inputobj);
         BufferedReader Buffer=new BufferedReader(Readerobj);
          OutputStream outobj=ConnectionSocket.getOutputStream();
          PrintWriter outToClient=new PrintWriter(outobj);
           while(true)
          {
-         //PrintWriter outToClient=new PrintWriter(outobj);
          String FromClient=Buffer.readLine();
          System.out.println("Received from client="+FromClient);
          String ReplyToClient=FromClient.toUpperCase();
          outToClient.println(ReplyToClient);
          outToClient.flush();
         }
-    }// end of try
+    }
     catch(Exception e)
     {
-        System.out.println("Exception is thrown");
+        System.out.println("Exception Error");
     }
-    }//end of run 
-    }// end of class
+    }
+    }
